@@ -1,10 +1,18 @@
 package main
 
 import (
-	"ntduncan.com/go-interpreter/lexer"
-	"testing"
+	"fmt"
+	"ntduncan.com/go-interpreter/repl"
+	"os"
+	"os/user"
 )
 
-function main() {
-	return;
+func main() {
+	user, err := user.Current()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Hello %s! This is the Monkey programming language!\n", user.Username)
+	fmt.Printf("Get started by typing a command\n")
+	repl.Start(os.Stdin, os.Stdout)
 }
