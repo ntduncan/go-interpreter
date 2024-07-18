@@ -529,7 +529,7 @@ func TestIfElseExpression(t *testing.T) {
 	}
 
 	if len(exp.Consequence.Statements) != 1 {
-		t.Fatalf("consequence is not 1 statements. got=%d\n")
+		t.Fatalf("consequence is not 1 statements. got=%d\n", len(exp.Consequence.Statements))
 	}
 
 	consequence, ok := exp.Consequence.Statements[0].(*ast.ExpressionStatement)
@@ -541,9 +541,18 @@ func TestIfElseExpression(t *testing.T) {
 		return
 	}
 
-	//@TODO: Add tests for else
-	if exp.Alternative != nil { //Since we don't provide an "else" with our test input
-		t.Errorf("exp.Alternatice.Statements was not nil. got=%+v", exp.Alternative)
+	if len(exp.Alternative.Statements) != 1 {
+		t.Fatalf("alternative is not 1 statement. got=%d\n", len(exp.Alternative.Statements))
 	}
+
+	alternative, ok := exp.Alternative.Statements[0].(*ast.ExpressionStatement)
+	if !ok {
+		t.Fatalf("Alternative.Statements[0] is not ast.ExpressionStatement. got=%T", exp.Alternative.Statements[0])
+	}
+	
+	if !testIdentifier(t, alternative.Expression, "y") {
+		return
+	}
+	
 
 }
