@@ -6,7 +6,6 @@ import (
 
 	"ntduncan.com/go-interpreter/ast"
 	"ntduncan.com/go-interpreter/lexer"
-	"ntduncan.com/go-interpreter/parser"
 )
 
 func TestLetStatements(t *testing.T) {
@@ -485,7 +484,7 @@ func TestIfExpression(t *testing.T) {
 	}
 
 	if len(exp.Consequence.Statements) != 1 {
-		t.Fatalf("consequence is not 1 statements. got=%d\n")
+		t.Fatalf("consequence is not 1 statements. got=%d\n", len(exp.Consequence.Statements))
 	}
 
 	consequence, ok := exp.Consequence.Statements[0].(*ast.ExpressionStatement)
@@ -549,10 +548,9 @@ func TestIfElseExpression(t *testing.T) {
 	if !ok {
 		t.Fatalf("Alternative.Statements[0] is not ast.ExpressionStatement. got=%T", exp.Alternative.Statements[0])
 	}
-	
+
 	if !testIdentifier(t, alternative.Expression, "y") {
 		return
 	}
-	
 
 }
