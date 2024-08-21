@@ -169,14 +169,11 @@ func (p *Parser) parseLetStatement() *ast.LetStatement {
 
 func (p *Parser) parseReturnStatement() *ast.ReturnStatement {
 	stmt := &ast.ReturnStatement{Token: p.curToken}
-
 	p.nextToken()
-
-	// TODO: Will need to account for more complex expressions (e.g. 1 + 2)
-	for !p.curTokenIs(token.SEMICOLON) {
+	stmt.ReturnValue = p.parseExpression(LOWEST)
+	if p.peekTokenIs(token.SEMICOLON) {
 		p.nextToken()
 	}
-
 	return stmt
 }
 
@@ -419,4 +416,3 @@ func (p *Parser) parseCallArguments() []ast.Expression {
 
 	return args
 }
-
